@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app='RSSFeedApp'>
+  <head>
+    <title> RSS Feed</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="app.js"> </script>
+  </head>
+  <body ng-controller="FeedCtrl">
+    <nav class="navbar navbar-default">
+          <div class=" navbar-header">
+            <a class="navbar-brand" href="#">RSS Feed Reader</a>
+          </div>
+          <form class="navbar-form" role="search">
+            <input type="text" class="form-control" autocomplete="off" placeholder="Enter Feed URL" ng-model="feedSrc" />
+            <button class="btn btn-info" type="button"  ng-click="loadFeed($event)">Load Feed
+            </button>
+                <input class="form-control" ng-show="feeds.length > 0" type="text" placeholder="Search inside Feed" data-ng-model="filterText" />
+        </form>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+            <h1 class="page-header" ng-show="feeds.length > 0">{{(feeds | filter:filterText).length}}
+              <small>Feed Found</small>
+            </h1>
+            <div ng-repeat="feed in feeds | filter:filterText">
+                <h2>
+                    <a href="{{feed.link}}">{{feed.title}}</a>
+                </h2>
+                <p class="lead">
+                    by <a href="">{{feed.author}}</a>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{feed.publishedDate}}</p>
+                <hr>
+                
+                <p ng-bind-html="feed.content | unsafe"></p>
+                <a class="btn btn-primary" href="{{feed.link}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+                <hr>
+              </div>
+            </div>
+          </div>          
+        </div>
+
+        <footer class="text-center">
+          <p>Desined by - <a href=""> Abhivendra Singh </a></p>
+        </footer>
+  </body>
+  </html>
